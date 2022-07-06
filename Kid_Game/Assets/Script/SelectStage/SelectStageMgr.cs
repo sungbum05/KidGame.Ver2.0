@@ -64,6 +64,8 @@ public class SelectStageMgr : MonoBehaviour
 
     void MouseEvent()
     {
+        Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         if (Input.GetMouseButtonDown(0))
         {
             StartMousePos = MainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -72,8 +74,6 @@ public class SelectStageMgr : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
             RaycastHit2D hit = Physics2D.Raycast(MousePos, transform.forward, 10.0f, layerMask);
             if (hit)
             {
@@ -105,7 +105,7 @@ public class SelectStageMgr : MonoBehaviour
 
         StartGamechk = false;
         FadePanel.DOFade(1, ShowTiem / 1.2f);
-        yield return new WaitForSeconds(ShowTiem / 1.2f);
+        //yield return new WaitForSeconds(ShowTiem / 1.2f);
 
         if (SceneName != "None")
         {
@@ -137,6 +137,8 @@ public class SelectStageMgr : MonoBehaviour
     #region 설정 창 관리
     public void OptionPanOnOff()
     {
+        SoundMgr.In.PlaySound("ButtonClick");
+
         if (OptionPan.active)
         {
             OnOption = false;

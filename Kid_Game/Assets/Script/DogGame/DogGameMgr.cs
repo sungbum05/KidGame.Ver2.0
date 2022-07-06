@@ -72,12 +72,14 @@ public class DogGameMgr : Mgr
 
         HomeBtn.onClick.AddListener(() =>
         {
+            SoundMgr.In.PlaySound("ButtonClick");
             SceneManager.LoadScene("SelectStageScene");
         });
         HomeBtn.gameObject.SetActive(false);
 
         RetryBtn.onClick.AddListener(() =>
         {
+            SoundMgr.In.PlaySound("ButtonClick");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         });
 
@@ -291,6 +293,8 @@ public class DogGameMgr : Mgr
     #region 설정 창 관리
     public void OptionPanOnOff()
     {
+        SoundMgr.In.PlaySound("ButtonClick");
+
         if (OptionPan.active)
         {
             OnOption = false;
@@ -307,6 +311,8 @@ public class DogGameMgr : Mgr
 
     public void GotoLobby()
     {
+        SoundMgr.In.PlaySound("ButtonClick");
+
         SceneManager.LoadScene("SelectStageScene");
     }
     #endregion

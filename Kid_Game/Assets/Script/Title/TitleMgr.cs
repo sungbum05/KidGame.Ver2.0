@@ -82,6 +82,7 @@ public class TitleMgr : MonoBehaviour
     IEnumerator StartGame()
     {
         StartGamechk = true;
+        SoundMgr.In.PlaySound("ButtonClick");
 
         yield return null;
         FadePanel.SetActive(true);
@@ -117,6 +118,8 @@ public class TitleMgr : MonoBehaviour
 
     public void ExitGame()
     {
+        SoundMgr.In.PlaySound("ButtonClick");
+
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 
@@ -128,6 +131,8 @@ public class TitleMgr : MonoBehaviour
 
     public void OptionPanOnOff()
     {
+        SoundMgr.In.PlaySound("ButtonClick");
+
         if (OptionPan.active)
             OptionPan.SetActive(false);
 
@@ -137,6 +142,8 @@ public class TitleMgr : MonoBehaviour
 
     public void CreditPanOnOff()
     {
+        SoundMgr.In.PlaySound("ButtonClick");
+
         if (CreditPan.active)
             CreditPan.SetActive(false);
 

@@ -81,12 +81,14 @@ public class SquirrelGameMgr : Mgr
 
         HomeBtn.onClick.AddListener(() =>
         {
+            SoundMgr.In.PlaySound("ButtonClick");
             SceneManager.LoadScene("SelectStageScene");
         });
         HomeBtn.gameObject.SetActive(false);
 
         RetryBtn.onClick.AddListener(() =>
         {
+            SoundMgr.In.PlaySound("ButtonClick");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         });
 
@@ -336,6 +338,7 @@ public class SquirrelGameMgr : Mgr
     #region 설정 창 관리
     public void OptionPanOnOff()
     {
+        SoundMgr.In.PlaySound("ButtonClick");
         if (OptionPan.active)
         {
             OnOption = false;
@@ -352,6 +355,7 @@ public class SquirrelGameMgr : Mgr
 
     public void GotoLobby()
     {
+        SoundMgr.In.PlaySound("ButtonClick");
         SceneManager.LoadScene("SelectStageScene");
     }
     #endregion
