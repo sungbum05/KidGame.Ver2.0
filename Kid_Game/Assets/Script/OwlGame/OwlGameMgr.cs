@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 enum OwlState
 {
-    Idle, Like
+    Idle, Like, Ending
 }
 
 [System.Serializable]
@@ -166,7 +166,6 @@ public class OwlGameMgr : Mgr
         StartCoroutine(AnimatorSet(OwlState.Like));
 
         yield return null;
-        Debug.Log(ObjNum);
 
         float UserTime = 1;
 
@@ -183,7 +182,6 @@ public class OwlGameMgr : Mgr
                 break;
         }
 
-        Debug.Log("End");
         Objs[ObjNum].Obj.transform.GetChild(0).gameObject.GetComponent<SpriteMask>().enabled = false;
         Objs[ObjNum].SuccesObj = true;
 
@@ -213,6 +211,12 @@ public class OwlGameMgr : Mgr
 
                 StartCoroutine(AnimatorSet(OwlState.Idle));
                 break;
+
+            case 2:
+                Owl.gameObject.GetComponent<Animator>().SetBool("Idle", false);
+                Owl.gameObject.GetComponent<Animator>().SetBool("False", false);
+                Owl.gameObject.GetComponent<Animator>().SetBool("Succes", true);
+                break;
         }
     }
 
@@ -231,7 +235,7 @@ public class OwlGameMgr : Mgr
 
         if (Chk)
         {
-            Debug.Log("asd");
+            StartCoroutine(AnimatorSet(OwlState.Ending));
             FindCircle.gameObject.transform.DOScale(15, ShowTime * 5);
             FindCircle.GetComponent<FindCircle>().enabled = false;
             ClearChk = true;

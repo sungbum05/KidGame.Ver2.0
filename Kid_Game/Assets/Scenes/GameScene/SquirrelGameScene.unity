@@ -453,7 +453,7 @@ Animator:
   m_GameObject: {fileID: 607252099}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 01ee706d0703b9649ac875b728bcfffd, type: 2}
+  m_Controller: {fileID: 9100000, guid: c5f60f427cfa5a242b5b5083a8760a09, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -521,7 +521,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 607252099}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.06, y: -2.6, z: 0}
+  m_LocalPosition: {x: 6.06, y: -2.8, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3002,6 +3002,7 @@ MonoBehaviour:
   RetryBtn: {fileID: 751880923}
   SelectNum: 0
   ResultNum: 0
+  Squirrel: {fileID: 607252099}
   Result: {fileID: 2109780677}
   Shadow: {fileID: 2010752263}
   SelectObj: {fileID: 0}

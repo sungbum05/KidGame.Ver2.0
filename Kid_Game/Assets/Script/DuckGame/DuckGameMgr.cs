@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 
+enum DuckState
+{
+    Idle, Suprise, Like, Ending
+}
+
 public class DuckGameMgr : Mgr
 {
     [Header("DuckScene_Mgr_attribute")]
@@ -20,6 +25,8 @@ public class DuckGameMgr : Mgr
     [SerializeField]
     private List<Sprite> ColorChatBox; // 엄마 오리가 부를 컬러 이미지들
 
+    [SerializeField]
+    GameObject MotherDuck;
     public Dictionary<string, Sprite> ColorChatBoxkDic = new Dictionary<string, Sprite>();
     [SerializeField]
     private List<Button> BabyDuckBtns; // 애기 오리들 상호 작용 버튼
@@ -67,6 +74,7 @@ public class DuckGameMgr : Mgr
             {
                 if (Btn.GetComponent<BabyDuckInfo>().BabyColor == SelectColor)
                 {
+                    StartCoroutine(AnimatorSet(DuckState.Like));
                     SoundMgr.In.PlaySound("Succes");
 
                     StartCoroutine(StartGame());
@@ -75,6 +83,7 @@ public class DuckGameMgr : Mgr
 
                 else
                 {
+                    StartCoroutine(AnimatorSet(DuckState.Suprise));
                     SoundMgr.In.PlaySound("Fail");
                 }
             });
@@ -97,6 +106,7 @@ public class DuckGameMgr : Mgr
             StartChk = false;
             ClearChk = true;
             StartCoroutine(ClearShow());
+            StartCoroutine(AnimatorSet(DuckState.Ending));
         }
     }
 
@@ -211,6 +221,45 @@ public class DuckGameMgr : Mgr
 
         ChatBox.sprite = ColorChatBoxkDic[SelectColor];
     } // 챗박스 색깔 변경
+
+    IEnumerator AnimatorSet(DuckState State)
+    {
+        switch ((int)State)
+        {
+            case 0:
+
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("Idle", true);
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("False", false);
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("Succes", false);
+
+                break;
+
+            case 1:
+
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("Idle", false);
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("False", true);
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("Succes", false);
+                yield return new WaitForSeconds(ShowTime / 1.5f);
+
+                StartCoroutine(AnimatorSet(DuckState.Idle));
+                break;
+
+            case 2:
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("Idle", false);
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("False", false);
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("Succes", true);
+                yield return new WaitForSeconds(ShowTime / 1.5f);
+
+                StartCoroutine(AnimatorSet(DuckState.Idle));
+                break;
+
+            case 3:
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("Idle", false);
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("False", false);
+                MotherDuck.gameObject.GetComponent<Animator>().SetBool("Succes", true);
+                break;
+        }
+    }
 
     #region 설정 창 관리
     public void OptionPanOnOff()

@@ -77,7 +77,6 @@ public class SelectStageMgr : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(MousePos, transform.forward, 10.0f, layerMask);
             if (hit)
             {
-                Debug.Log(hit.collider.name);
                 SelectHouse = hit.collider.gameObject;
                 SelectHouse.GetComponent<SpriteRenderer>().sprite = SelectHouse.GetComponent<ObjectImg>().ChangeImg;
             }
@@ -116,7 +115,6 @@ public class SelectStageMgr : MonoBehaviour
     IEnumerator FadeIn()
     {
         yield return null;
-        Debug.Log("asdas");
 
         FadePanel.DOFade(0, ShowTiem / 1.2f);
         yield return new WaitForSeconds(ShowTiem / 1.2f);

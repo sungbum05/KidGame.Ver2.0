@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 enum AntState
 {
-    Idle, Surprise, Like
+    Idle, Surprise, Like, Ending
 }
 
 public class AntGameScene : Mgr
@@ -291,6 +291,15 @@ public class AntGameScene : Mgr
                 break;
 
             case 2:
+                foreach (Transform Ant in Ants.transform)
+                {
+                    Ant.gameObject.GetComponent<Animator>().SetBool("Idle", false);
+                    Ant.gameObject.GetComponent<Animator>().SetBool("False", false);
+                    Ant.gameObject.GetComponent<Animator>().SetBool("Succes", true);
+                }
+                break;
+
+            case 3:
                 foreach (Transform Ant in Ants.transform)
                 {
                     Ant.gameObject.GetComponent<Animator>().SetBool("Idle", false);

@@ -7,7 +7,7 @@ using DG.Tweening;
 
 enum DogState
 {
-    Idle, Angry, Like
+    Idle, Angry, Like, Ending
 }
 
 [System.Serializable]
@@ -130,6 +130,7 @@ public class DogGameMgr : Mgr
         {
             Debug.Log("eend");
             StartCoroutine(ClearShow());
+            StartCoroutine(AnimatorSet(DogState.Ending));
         }
         #endregion
     }
@@ -269,6 +270,13 @@ public class DogGameMgr : Mgr
                 yield return new WaitForSeconds(ShowTime / 1.5f);
 
                 StartCoroutine(AnimatorSet(DogState.Idle));
+                break;
+
+            case 3:
+                Debug.Log("2");
+                Dog.gameObject.GetComponent<Animator>().SetBool("Idle", false);
+                Dog.gameObject.GetComponent<Animator>().SetBool("False", false);
+                Dog.gameObject.GetComponent<Animator>().SetBool("Succes", true);
                 break;
         }
     }

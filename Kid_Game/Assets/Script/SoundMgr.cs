@@ -95,7 +95,6 @@ public class SoundMgr : SingletonMono<SoundMgr>
             return;
         }
 
-        Debug.Log(a_volume * masterVolumeSFX);
         sfxPlayer.PlayOneShot(SFXaudioClipsDic[a_name], a_volume * masterVolumeSFX);
     }
 

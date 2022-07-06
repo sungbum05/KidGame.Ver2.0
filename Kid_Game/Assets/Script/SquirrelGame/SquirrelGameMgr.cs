@@ -22,6 +22,11 @@ public class ShowObj
     public int PickNum;
 }
 
+enum SqurrielState
+{
+    Idle, Suprise, Like, Ending
+}
+
 public enum StageResult
 {
     Fail = 0,
@@ -41,6 +46,8 @@ public class SquirrelGameMgr : Mgr
     int SelectNum = 0;
     [SerializeField]
     int ResultNum = 0;
+    [SerializeField]
+    GameObject Squirrel;
     [SerializeField]
     GameObject Result = null;
     [SerializeField]
@@ -171,6 +178,7 @@ public class SquirrelGameMgr : Mgr
         if (CurGameCount > MaxGameCount) //게임 끝남
         {
             ClearChk = true;
+            StartCoroutine(AnimatorSet(SqurrielState.Ending));
             StartCoroutine(ClearShow());
         }
         #endregion
@@ -216,6 +224,45 @@ public class SquirrelGameMgr : Mgr
             SelectNum = 0;
 
             GetShuffleList<ResultObjClass>(ResultObjImgs);
+        }
+    }
+
+    IEnumerator AnimatorSet(SqurrielState State)
+    {
+        switch ((int)State)
+        {
+            case 0:
+
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("Idle", true);
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("False", false);
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("Succes", false);
+
+                break;
+
+            case 1:
+
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("Idle", false);
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("False", true);
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("Succes", false);
+                yield return new WaitForSeconds(ShowTime / 1.5f);
+
+                StartCoroutine(AnimatorSet(SqurrielState.Idle));
+                break;
+
+            case 2:
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("Idle", false);
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("False", false);
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("Succes", true);
+                yield return new WaitForSeconds(ShowTime / 1.5f);
+
+                StartCoroutine(AnimatorSet(SqurrielState.Idle));
+                break;
+
+            case 3:
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("Idle", false);
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("False", false);
+                Squirrel.gameObject.GetComponent<Animator>().SetBool("Succes", true);
+                break;
         }
     }
 
@@ -265,6 +312,7 @@ public class SquirrelGameMgr : Mgr
         {
             if (MousePos.x < MaxPos.x && MousePos.x > MinPos.x && MousePos.y < MaxPos.y && MousePos.y > MinPos.y && SelectNum == ResultNum)
             {
+                StartCoroutine(AnimatorSet(SqurrielState.Like));
                 SoundMgr.In.PlaySound("Succes");
 
                 Debug.Log("Yes");
@@ -273,6 +321,7 @@ public class SquirrelGameMgr : Mgr
 
             else
             {
+                StartCoroutine(AnimatorSet(SqurrielState.Suprise));
                 SoundMgr.In.PlaySound("Fail");
 
                 Debug.Log("No");
