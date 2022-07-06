@@ -210,7 +210,7 @@ public class SquirrelGameMgr : Mgr
         {
             Debug.Log("Asdasd");
             SelectObj.transform.localPosition = Objs[int.Parse(SelectObj.name.Split('_')[1]) - 1].OriginalPos;
-            SelectObj.SetActive(true);
+            //SelectObj.SetActive(true);
 
             SelectObj = null;
             SelectNum = 0;
@@ -261,20 +261,23 @@ public class SquirrelGameMgr : Mgr
 
     void MouseUp()
     {
-        if (MousePos.x < MaxPos.x && MousePos.x > MinPos.x && MousePos.y < MaxPos.y && MousePos.y > MinPos.y && SelectNum == ResultNum)
+        if (ClearChk == false)
         {
-            SoundMgr.In.PlaySound("Succes");
+            if (MousePos.x < MaxPos.x && MousePos.x > MinPos.x && MousePos.y < MaxPos.y && MousePos.y > MinPos.y && SelectNum == ResultNum)
+            {
+                SoundMgr.In.PlaySound("Succes");
 
-            Debug.Log("Yes");
-            StartCoroutine(SuccesThisStage(SelectObj, StageResult.Succes));
-        }
+                Debug.Log("Yes");
+                StartCoroutine(SuccesThisStage(SelectObj, StageResult.Succes));
+            }
 
-        else
-        {
-            SoundMgr.In.PlaySound("Fail");
+            else
+            {
+                SoundMgr.In.PlaySound("Fail");
 
-            Debug.Log("No");
-            StartCoroutine(SuccesThisStage(SelectObj, StageResult.Fail));
+                Debug.Log("No");
+                StartCoroutine(SuccesThisStage(SelectObj, StageResult.Fail));
+            }
         }
     }
     #endregion
@@ -319,6 +322,10 @@ public class SquirrelGameMgr : Mgr
         yield return null;
 
         Obj.transform.DOScale((int)type, ShowTime * 1f);
+
+        if(type == ShowType.Spawn)
+            Obj.SetActive(true);
+
         while (true)
         {
             yield return null;

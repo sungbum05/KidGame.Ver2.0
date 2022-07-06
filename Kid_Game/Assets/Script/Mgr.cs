@@ -21,6 +21,8 @@ public class Mgr : MonoBehaviour //각 씬 매니져들 상속
     [Space(10)]
     [SerializeField]
     List<GameObject> ProgressPoint;
+    [SerializeField]
+    Sprite OnProgressPointImg;
 
     [Header("Mgr_Basic_Setting_Ending")]
     #region 게임 끝 연출
@@ -54,7 +56,8 @@ public class Mgr : MonoBehaviour //각 씬 매니져들 상속
             {
                 if (i <= CurGameCount - 1)
                 {
-                    obj.GetComponent<Image>().color = Color.white;
+                    //obj.GetComponent<Image>().color = Color.white;
+                    obj.GetComponent<Image>().sprite = OnProgressPointImg;
                 }
 
                 i++;
